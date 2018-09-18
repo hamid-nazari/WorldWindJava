@@ -1187,7 +1187,7 @@ public class PointPlacemark extends WWObjectImpl
         gl.glLoadIdentity();
 
         Double labelScale = this.getActiveAttributes().getLabelScale();
-        if (labelScale != null)
+        if (labelScale != null && !dc.isPickingMode())
         {
             gl.glTranslatef(x, y, 0); // Assumes matrix mode is MODELVIEW
             gl.glScaled(labelScale, labelScale, 1);
