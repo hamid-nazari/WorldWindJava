@@ -168,7 +168,7 @@ public class BasicDragger implements SelectListener
             }
         }
 
-        event.consume();
+//        event.consume();
     }
 
     /**
