@@ -740,7 +740,7 @@ public class PointPlacemark extends WWObjectImpl
         // The code in this method determines whether to queue an ordered renderable for the placemark
         // and its optional line.
 
-        OrderedPlacemark opm = new OrderedPlacemark();
+        OrderedPlacemark opm = createOrderedPlacemark();
 
         // Try to re-use values already calculated this frame, unless we're rendering a continuous 2D globe.
         if (dc.getFrameTimeStamp() != this.frameNumber || dc.isContinuous2DGlobe())
@@ -785,6 +785,11 @@ public class PointPlacemark extends WWObjectImpl
 
         if (dc.isPickingMode())
             this.pickLayer = dc.getCurrentLayer();
+    }
+
+    protected OrderedPlacemark createOrderedPlacemark()
+    {
+    	return new OrderedPlacemark();
     }
 
     /**
