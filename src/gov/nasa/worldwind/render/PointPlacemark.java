@@ -1136,12 +1136,11 @@ public class PointPlacemark extends WWObjectImpl
 
         Vec4 labelPoint = this.computeLabelPoint(dc, opm);
 
-        Font font = this.getActiveAttributes().getLabelFont();
-        if (font == null)
+        /**
+         * Moved the code to allow for caching when possible
+         */
+        Rectangle2D bounds =getTextBounds(dc);
 
-            font = PointPlacemarkAttributes.DEFAULT_LABEL_FONT;
-        TextRenderer textRenderer = OGLTextRenderer.getOrCreateTextRenderer(dc.getTextRendererCache(), font);
-        Rectangle2D bounds = textRenderer.getBounds(this.getLabelText());
         double width = bounds.getWidth();
         double height = bounds.getHeight();
 
@@ -1154,6 +1153,15 @@ public class PointPlacemark extends WWObjectImpl
 
         return new Rectangle((int) labelPoint.x, (int) labelPoint.getY(), (int) Math.ceil(width),
             (int) Math.ceil(height));
+    }
+
+    protected Rectangle2D getTextBounds(DrawContext dc)
+    {
+    	Font font = this.getActiveAttributes().getLabelFont();
+        if (font == null)
+            font = PointPlacemarkAttributes.DEFAULT_LABEL_FONT;
+        TextRenderer textRenderer = OGLTextRenderer.getOrCreateTextRenderer(dc.getTextRendererCache(), font);
+        return textRenderer.getBounds(this.getLabelText());
     }
 
     /**
