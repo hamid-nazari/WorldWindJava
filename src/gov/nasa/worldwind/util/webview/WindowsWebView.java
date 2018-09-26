@@ -517,12 +517,12 @@ public class WindowsWebView extends AbstractWebView
 
             // Load the WebViewWindow's current display pixels into the currently bound OGL texture if our update time
             // is different than the WebViewWindow's update time.
-            long newUpdateTime = WindowsWebViewJNI.getUpdateTime(webViewWindowPtr);
-            if (newUpdateTime != this.updateTime)
-            {
+//            long newUpdateTime = WindowsWebViewJNI.getUpdateTime(webViewWindowPtr);
+//            if (newUpdateTime != this.updateTime)
+//            {
                 WindowsWebViewJNI.loadDisplayInGLTexture(webViewWindowPtr, texture.getTarget());
-                this.updateTime = newUpdateTime;
-            }
+//                this.updateTime = newUpdateTime;
+//            }
         }
     }
 }
