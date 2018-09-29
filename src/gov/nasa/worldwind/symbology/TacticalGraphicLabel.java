@@ -196,6 +196,8 @@ public class TacticalGraphicLabel
     /** Active layer. */
     protected Layer pickLayer;
 
+    protected double scale;
+
     /** Create a new empty label. */
     public TacticalGraphicLabel()
     {
@@ -797,10 +799,10 @@ public class TacticalGraphicLabel
             // text. For example, if the offset normally aligns the top of the text with the place point then without
             // this adjustment the bottom of the text would align with the place point when the orientation is
             // reversed.
-            if (orientationReversed)
-            {
-                dy = -(dy + this.bounds.getHeight());
-            }
+			// if (orientationReversed)
+			// {
+			// dy = -(dy + this.bounds.getHeight());
+			// }
 
             Vec4 pOffset = new Vec4(offsetPoint.getX(), dy);
             Matrix rot = Matrix.fromRotationZ(olbl.rotation.multiply(-1));
@@ -934,11 +936,16 @@ public class TacticalGraphicLabel
         if (!dc.is2DGlobe() && this.thisFramesOrderedLabel.eyeDistance > horizon)
             return;
 
-        if (this.intersectsFrustum(dc, this.thisFramesOrderedLabel))
+        if (this.intersectsFrustum(dc, this.thisFramesOrderedLabel) && adjustForRendering(dc, this.thisFramesOrderedLabel))
             dc.addOrderedRenderable(this.thisFramesOrderedLabel);
 
         if (dc.isPickingMode())
             this.pickLayer = dc.getCurrentLayer();
+    }
+
+    protected boolean adjustForRendering(DrawContext dc, OrderedLabel olbl)
+    {
+    	return true;
     }
 
     /**
@@ -1140,12 +1147,15 @@ public class TacticalGraphicLabel
             int x = olbl.screenPoint.x;
             int y = olbl.screenPoint.y;
 
-            if (headingDegrees != 0)
+            if (headingDegrees != 0 || scale != 0)
             {
                 gl.glPushMatrix();
                 matrixPushed = true;
 
                 gl.glTranslated(x, y, 0);
+                if(scale != 0)
+                	gl.glScaled(scale, scale, scale);
+                if(headingDegrees != 0)
                 gl.glRotated(headingDegrees, 0, 0, 1);
                 gl.glTranslated(-x, -y, 0);
             }
@@ -1506,4 +1516,22 @@ public class TacticalGraphicLabel
         else
             return new Color(1, 1, 1, 0.7f);
     }
+
+	/**
+	 * @return the scale
+	 */
+	public double getScale()
+	{
+		return scale;
+	}
+
+	/**
+	 * @param scale the scale to set
+	 */
+	public void setScale(double scale)
+	{
+		this.scale = scale;
+	}
+
+
 }

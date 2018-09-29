@@ -1395,10 +1395,12 @@ public abstract class AbstractShape extends WWObjectImpl
             gl.glHint(GL.GL_LINE_SMOOTH_HINT, activeAttrs.isEnableAntialiasing() ? GL.GL_NICEST : GL.GL_DONT_CARE);
         }
 
-        if (dc.isPickingMode() && activeAttrs.getOutlineWidth() < this.getOutlinePickWidth())
+        float outlineWidth = (float)(computeOutlineScale(dc, activeAttrs) * activeAttrs.getOutlineWidth());
+
+        if (dc.isPickingMode() && outlineWidth < this.getOutlinePickWidth())
             gl.glLineWidth(this.getOutlinePickWidth());
         else
-            gl.glLineWidth((float) activeAttrs.getOutlineWidth());
+            gl.glLineWidth(outlineWidth);
 
         if (activeAttrs.getOutlineStippleFactor() > 0)
         {
@@ -1411,6 +1413,11 @@ public abstract class AbstractShape extends WWObjectImpl
         }
 
         gl.glDisable(GL.GL_TEXTURE_2D);
+    }
+
+    protected double computeOutlineScale(DrawContext dc, ShapeAttributes activeAttrs)
+    {
+    	return 1d;
     }
 
     /**
