@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="testFunctional"/>
+	<classpathentry kind="lib" path="gdal.jar"/>
+	<classpathentry kind="lib" path="gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="jogl-all.jar"/>
+	<classpathentry kind="lib" path="lib-external/batik/lib/xml-apis-ext.jar"/>
+	<classpathentry kind="lib" path="lib-external/batik/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="vpf-symbols.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
