@@ -2,74 +2,42 @@
  * Copyright 2006-2009, 2017, 2020 United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
  * All rights reserved.
- * 
+ *
  * The NASA World Wind Java (WWJ) platform is licensed under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed
  * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
- * 
+ *
  * NASA World Wind Java (WWJ) also contains the following 3rd party Open Source
  * software:
- * 
+ *
  *     Jackson Parser – Licensed under Apache 2.0
  *     GDAL – Licensed under MIT
  *     JOGL – Licensed under  Berkeley Software Distribution (BSD)
  *     Gluegen – Licensed under Berkeley Software Distribution (BSD)
- * 
+ *
  * A complete listing of 3rd Party software notices and licenses included in
  * NASA World Wind Java (WWJ)  can be found in the WorldWindJava-v2.2 3rd-party
  * notices and licenses PDF found in code directory.
  */
 package gov.nasa.worldwind.render;
 
-import static gov.nasa.worldwind.ogc.kml.impl.KMLExportUtil.kmlBoolean;
-
-import java.awt.Color;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import com.jogamp.common.nio.Buffers;
-
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.cache.GpuResourceCache;
-import gov.nasa.worldwind.cache.ShapeDataCache;
-import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.cache.*;
+import gov.nasa.worldwind.geom.*;
 import gov.nasa.worldwind.geom.Box;
 import gov.nasa.worldwind.geom.Cylinder;
-import gov.nasa.worldwind.geom.Extent;
-import gov.nasa.worldwind.geom.Frustum;
-import gov.nasa.worldwind.geom.Intersection;
-import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Line;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
-import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.ogc.kml.impl.KMLExportUtil;
-import gov.nasa.worldwind.pick.PickSupport;
-import gov.nasa.worldwind.pick.PickedObject;
+import gov.nasa.worldwind.pick.*;
 import gov.nasa.worldwind.terrain.Terrain;
 import gov.nasa.worldwind.util.*;
 import gov.nasa.worldwind.util.measure.LengthMeasurer;
@@ -2371,8 +2339,8 @@ public class Path extends AbstractShape {
 		else
 			step = arcLength / this.numSubsegments;
 
-            Position pos;
-            Color color;
+        Position pos = null;
+        Color color = null;
 		for (double s = 0, p = step; arcLength - p > 1e-9; p += step)
 		{
             s = p / arcLength;
@@ -2403,19 +2371,20 @@ public class Path extends AbstractShape {
 			else // GREAT_CIRCLE
 			{
 				if (segmentAzimuth == null || segmentDistance == null)
-            {
-                if (segmentAzimuth == null) {
-                    segmentAzimuth = LatLon.greatCircleAzimuth(posA, posB);
-                    segmentDistance = LatLon.greatCircleDistance(posA, posB);
-                }
-                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
-                LatLon latLon = LatLon.greatCircleEndPosition(posA, segmentAzimuth, distance);
-                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
-                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
-            }
+	            {
+	                if (segmentAzimuth == null) {
+	                    segmentAzimuth = LatLon.greatCircleAzimuth(posA, posB);
+	                    segmentDistance = LatLon.greatCircleDistance(posA, posB);
+	                }
+	                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
+	                LatLon latLon = LatLon.greatCircleEndPosition(posA, segmentAzimuth, distance);
+	                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
+	                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
+	            }
 
-            this.addTessellatedPosition(pos, color, null, pathData);
-        }
+	            this.addTessellatedPosition(pos, color, null, pathData);
+	        }
+		}
 
         this.addTessellatedPosition(posB, colorB, ordinalB, pathData);
     }
@@ -2559,7 +2528,7 @@ public class Path extends AbstractShape {
 			: this.getPositions();
 		if (posits == null)
             return null;
-        
+
         return super.computeExtentFromPositions(globe, verticalExaggeration, posits);
     }
 
