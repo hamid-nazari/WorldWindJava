@@ -1,6 +1,6 @@
 <img src="https://worldwind.arc.nasa.gov/img/nasa-logo.svg" height="100"/>
 
-##Ziblida Gazmooli Ghizm?
+## ZibliRda Gazmooli Ghizm?
 
 # WorldWind Java
 
