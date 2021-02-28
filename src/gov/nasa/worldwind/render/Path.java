@@ -156,10 +156,8 @@ public class Path extends AbstractShape {
          * <p>
          * The returned color's RGB components must <em>not</em> be premultiplied by its Alpha component.
          *
-		 * @param position
-		 *            the path position the color corresponds to.
-		 * @param ordinal
-		 *            the ordinal number of the specified position.
+         * @param position the path position the color corresponds to.
+         * @param ordinal the ordinal number of the specified position.
          *
          * @return an RGBA color corresponding to the position and ordinal, or <code>null</code> if a color cannot be
          * determined.
@@ -261,8 +259,7 @@ public class Path extends AbstractShape {
          * <code>null</code> to specify that the path does not have per-position colors. The entries in the specified
          * list must have a one-to-one correspondence with the entries in <code>tessellatedPositions</code>.
          *
-		 * @param tessellatedColors
-		 *            the colors corresponding to each path position, or <code>null</code> if the path
+         * @param tessellatedColors the colors corresponding to each path position, or <code>null</code> if the path
          * does not have per-position colors.
          */
         public void setTessellatedColors(ArrayList<Color> tessellatedColors) {
@@ -338,8 +335,7 @@ public class Path extends AbstractShape {
          * Specifies the offset in number of floats to the first RGBA color tuple in <code>renderedPath</code>. Specify
          * 0 if <code>renderedPath</code> has no RGBA color tuples.
          *
-		 * @param offset
-		 *            the offset in number of floats to the first RGBA color tuple in <code>renderedPath</code>.
+         * @param offset the offset in number of floats to the first RGBA color tuple in <code>renderedPath</code>.
          */
         public void setColorOffset(int offset) {
             this.colorOffset = offset;
@@ -359,8 +355,7 @@ public class Path extends AbstractShape {
          * Specifies the stride in number of floats between the first element of consecutive vertices in
          * <code>renderedPath</code>.
          *
-		 * @param stride
-		 *            the stride in number of floats between vertices in in <code>renderedPath</code>.
+         * @param stride the stride in number of floats between vertices in in <code>renderedPath</code>.
          */
         public void setVertexStride(int stride) {
             this.vertexStride = stride;
@@ -379,8 +374,7 @@ public class Path extends AbstractShape {
          * Specifies the number of vertices in <code>renderedPath</code>. Specify 0 if <code>renderedPath</code>
          * contains no vertices.
          *
-		 * @param count
-		 *            the the number of vertices in <code>renderedPath</code>.
+         * @param count the the number of vertices in <code>renderedPath</code>.
          */
         public void setVertexCount(int count) {
             this.vertexCount = count;
@@ -429,12 +423,9 @@ public class Path extends AbstractShape {
          * Creates a new PickablePositions with the specified color code range and Path. See the PickablePositions
          * class-level documentation for more information.
          *
-		 * @param minColorCode
-		 *            the minimum color code, inclusive.
-		 * @param maxColorCode
-		 *            the maximum color code, inclusive.
-		 * @param path
-		 *            the Path who's position points are associated with the specified color code range.
+         * @param minColorCode the minimum color code, inclusive.
+         * @param maxColorCode the maximum color code, inclusive.
+         * @param path the Path who's position points are associated with the specified color code range.
          */
         public PickablePositions(int minColorCode, int maxColorCode, Path path) {
             this.minColorCode = minColorCode;
@@ -497,15 +488,11 @@ public class Path extends AbstractShape {
          * Registers a range of unique pick color codes with a Path, representing the range of pick colors that the
          * Path's position points are drawn in. The color codes represent ARGB colors packed into a 32-bit integer.
          *
-		 * @param minColorCode
-		 *            the minimum color code, inclusive.
-		 * @param maxColorCode
-		 *            the maximum color code, inclusive.
-		 * @param path
-		 *            the Path who's position points are associated with the specified color code range.
+         * @param minColorCode the minimum color code, inclusive.
+         * @param maxColorCode the maximum color code, inclusive.
+         * @param path the Path who's position points are associated with the specified color code range.
          *
-		 * @throws IllegalArgumentException
-		 *             if the path is null.
+         * @throws IllegalArgumentException if the path is null.
          */
         public void addPickablePositions(int minColorCode, int maxColorCode, Path path) {
             if (path == null) {
@@ -531,16 +518,13 @@ public class Path extends AbstractShape {
          * This returns null if the pickPoint is null, or if there is no Path or Path position point at the specified
          * pick point.
          *
-		 * @param dc
-		 *            the current draw context.
-		 * @param pickPoint
-		 *            the screen-coordinate point in question.
+         * @param dc the current draw context.
+         * @param pickPoint the screen-coordinate point in question.
          *
          * @return a new picked object instances indicating the Path or Path position point at the specified pick point,
          * or null if no Path is at the specified pick point.
          *
-		 * @throws IllegalArgumentException
-		 *             if the draw context is null.
+         * @throws IllegalArgumentException if the draw context is null.
          */
         @Override
         public PickedObject getTopObject(DrawContext dc, Point pickPoint) {
@@ -584,12 +568,9 @@ public class Path extends AbstractShape {
          * positions intersect the rectangle, the picked object's AVList contains the ordinal numbers in the key
          * AVKey.ORDINAL_LIST.
          *
-		 * @param dc
-		 *            the draw context which receives the picked objects.
-		 * @param pickRect
-		 *            the rectangle in AWT screen coordinates.
-		 * @param layer
-		 *            the layer associated with the picked objects.
+         * @param dc the draw context which receives the picked objects.
+         * @param pickRect the rectangle in AWT screen coordinates.
+         * @param layer the layer associated with the picked objects.
          */
         @SuppressWarnings({"unchecked"})
         @Override
@@ -743,8 +724,7 @@ public class Path extends AbstractShape {
      * any positions in the set change, {@link #setPositions(Iterable)} must be called to inform this shape of the
      * change.
      *
-	 * @throws IllegalArgumentException
-	 *             if positions is null.
+     * @throws IllegalArgumentException if positions is null.
      */
     public Path(Iterable<? extends Position> positions) {
         this.setPositions(positions);
@@ -783,8 +763,7 @@ public class Path extends AbstractShape {
      * any positions in the set change, {@link #setPositions(Iterable)} must be called to inform this shape of the
      * change.
      *
-	 * @throws IllegalArgumentException
-	 *             if positions is null.
+     * @throws IllegalArgumentException if positions is null.
      */
     public Path(Position.PositionList positions) {
         if (positions == null) {
@@ -801,13 +780,10 @@ public class Path extends AbstractShape {
     /**
      * Creates a path between two positions.
      *
-	 * @param posA
-	 *            the first position.
-	 * @param posB
-	 *            the second position.
+     * @param posA the first position.
+     * @param posB the second position.
      *
-	 * @throws IllegalArgumentException
-	 *             if either position is null.
+     * @throws IllegalArgumentException if either position is null.
      */
     public Path(Position posA, Position posB) {
         if (posA == null || posB == null) {
@@ -858,11 +834,9 @@ public class Path extends AbstractShape {
      * <p>
      * Note: If fewer than two positions is specified, this path is not drawn.
      *
-	 * @param positions
-	 *            this path's positions.
+     * @param positions this path's positions.
      *
-	 * @throws IllegalArgumentException
-	 *             if positions is null.
+     * @throws IllegalArgumentException if positions is null.
      */
     public void setPositions(Iterable<? extends Position> positions) {
         if (positions == null) {
@@ -924,8 +898,7 @@ public class Path extends AbstractShape {
      * Specify <code>null</code> to disable position colors and draw this path's line and optional position dots
      * according to its ShapeAttributes. This path's position colors reference is <code>null</code> by default.
      *
-	 * @param positionColors
-	 *            the PositionColors that defines an RGBA color for each of this path's positions, or
+     * @param positionColors the PositionColors that defines an RGBA color for each of this path's positions, or
      * <code>null</code> to color this path's positions according to its ShapeAttributes.
      *
      * @see #getPositionColors()
@@ -952,8 +925,7 @@ public class Path extends AbstractShape {
      * Specifies whether to extrude this path. Extruding the path extends a filled interior from the path to the
      * terrain.
      *
-	 * @param extrude
-	 *            true to extrude this path, otherwise false. The default value is false.
+     * @param extrude true to extrude this path, otherwise false. The default value is false.
      */
     public void setExtrude(boolean extrude) {
         this.extrude = extrude;
@@ -974,8 +946,7 @@ public class Path extends AbstractShape {
     /**
      * Specifies whether this path is terrain following.
      *
-	 * @param followTerrain
-	 *            true if terrain following, otherwise false. The default value is false.
+     * @param followTerrain true if terrain following, otherwise false. The default value is false.
      */
     public void setFollowTerrain(boolean followTerrain) {
         if (this.followTerrain == followTerrain) {
@@ -1009,8 +980,7 @@ public class Path extends AbstractShape {
      * Note: The sub-segments number is ignored when the path follows terrain or when the path type is {@link
      * AVKey#LINEAR}.
      *
-	 * @param numSubsegments
-	 *            the number of sub-segments. The default is 10.
+     * @param numSubsegments the number of sub-segments. The default is 10.
      */
     public void setNumSubsegments(int numSubsegments) {
         this.numSubsegments = numSubsegments;
@@ -1059,8 +1029,7 @@ public class Path extends AbstractShape {
      * specifies the maximum number of pixels between tessellation points. Lower values increase accuracy but decrease
      * performance.
      *
-	 * @param terrainConformance
-	 *            the number of pixels between tessellation points.
+     * @param terrainConformance the number of pixels between tessellation points.
      */
     public void setTerrainConformance(double terrainConformance) {
         this.terrainConformance = terrainConformance;
@@ -1082,8 +1051,7 @@ public class Path extends AbstractShape {
      * Specifies this path's path type. Recognized values are {@link AVKey#GREAT_CIRCLE}, {@link AVKey#RHUMB_LINE} and
      * {@link AVKey#LINEAR}.
      *
-	 * @param pathType
-	 *            the current path type. The default value is {@link AVKey#LINEAR}.
+     * @param pathType the current path type. The default value is {@link AVKey#LINEAR}.
      *
      * @see <a href="{@docRoot}/overview-summary.html#path-types">Path Types</a>
      */
@@ -1107,8 +1075,7 @@ public class Path extends AbstractShape {
     /**
      * Specifies whether to draw vertical lines at each specified path position when this path is extruded.
      *
-	 * @param drawVerticals
-	 *            true to draw the lines, otherwise false. The default value is true.
+     * @param drawVerticals true to draw the lines, otherwise false. The default value is true.
      */
     public void setDrawVerticals(boolean drawVerticals) {
         this.drawVerticals = drawVerticals;
@@ -1128,8 +1095,7 @@ public class Path extends AbstractShape {
      * Specifies whether to draw dots at the original positions of the Path. The dot color and size are controlled by
      * the Path's outline material and scale attributes.
      *
-	 * @param showPositions
-	 *            true if dots are drawn at each original (not tessellated) position, otherwise false.
+     * @param showPositions true if dots are drawn at each original (not tessellated) position, otherwise false.
      */
     public void setShowPositions(boolean showPositions) {
         this.showPositions = showPositions;
@@ -1151,8 +1117,7 @@ public class Path extends AbstractShape {
      * multiplied by the outline width given in this path's {@link ShapeAttributes} to determine the actual size of the
      * dots, in pixels. See {@link ShapeAttributes#setOutlineWidth(double)}.
      *
-	 * @param showPositionsScale
-	 *            the new draw-position scale.
+     * @param showPositionsScale the new draw-position scale.
      */
     public void setShowPositionsScale(double showPositionsScale) {
         this.showPositionsScale = showPositionsScale;
@@ -1171,8 +1136,7 @@ public class Path extends AbstractShape {
     /**
      * Specifies the eye distance from this shape's center beyond which position dots are not drawn.
      *
-	 * @param showPositionsThreshold
-	 *            the eye distance at which to enable or disable position dot drawing.
+     * @param showPositionsThreshold the eye distance at which to enable or disable position dot drawing.
      */
     public void setShowPositionsThreshold(double showPositionsThreshold) {
         this.showPositionsThreshold = showPositionsThreshold;
@@ -1521,10 +1485,8 @@ public class Path extends AbstractShape {
     /**
      * Draws vertical lines at this path's specified positions.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param pathData
-	 *            the current globe-specific path data.
+     * @param dc the current draw context.
+     * @param pathData the current globe-specific path data.
      */
     protected void drawVerticalOutlineVA(DrawContext dc, PathData pathData) {
         IntBuffer polePositions = pathData.polePositions;
@@ -1542,10 +1504,8 @@ public class Path extends AbstractShape {
     /**
      * Draws vertical lines at this path's specified positions.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param pathData
-	 *            the current globe-specific path data.
+     * @param dc the current draw context.
+     * @param pathData the current globe-specific path data.
      */
     protected void drawPointsVA(DrawContext dc, PathData pathData) {
         double d = this.getDistanceMetric(dc, pathData);
@@ -1595,12 +1555,9 @@ public class Path extends AbstractShape {
      * previous state. If the caller intends to use that buffer after this method returns, the caller must bind the
      * buffer again.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param vboIds
-	 *            the ids of this shapes buffers.
-	 * @param pathData
-	 *            the current globe-specific path data.
+     * @param dc the current draw context.
+     * @param vboIds the ids of this shapes buffers.
+     * @param pathData the current globe-specific path data.
      */
     protected void drawPointsVBO(DrawContext dc, int[] vboIds, PathData pathData) {
         double d = this.getDistanceMetric(dc, pathData);
@@ -1656,8 +1613,7 @@ public class Path extends AbstractShape {
             // obscure the other nearby points.
             ShapeAttributes activeAttrs = this.getActiveAttributes();
             double deltaWidth = activeAttrs.getOutlineWidth() < this.getOutlinePickWidth()
-				? this.getOutlinePickWidth() - activeAttrs.getOutlineWidth()
-				: 0;
+                    ? this.getOutlinePickWidth() - activeAttrs.getOutlineWidth() : 0;
             gl.glPointSize((float) (this.getShowPositionsScale() * activeAttrs.getOutlineWidth() + deltaWidth));
         } else {
             // During normal rendering mode, compute the GL point size as the product of the active outline width and
@@ -1679,8 +1635,7 @@ public class Path extends AbstractShape {
     /**
      * Draws this path's interior when the path is extruded.
      *
-	 * @param dc
-	 *            the current draw context.
+     * @param dc the current draw context.
      */
     @Override
     protected void doDrawInterior(DrawContext dc) {
@@ -1719,12 +1674,9 @@ public class Path extends AbstractShape {
      * Computes the shape's model-coordinate path from a list of positions. Applies the path's terrain-conformance
      * settings. Adds extrusion points -- those on the ground -- when the path is extruded.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param positions
-	 *            the positions to create a path for.
-	 * @param pathData
-	 *            the current globe-specific path data.
+     * @param dc the current draw context.
+     * @param positions the positions to create a path for.
+     * @param pathData the current globe-specific path data.
      */
     protected void computePath(DrawContext dc, List<Position> positions, PathData pathData) {
         pathData.hasExtrusionPoints = false;
@@ -1750,12 +1702,9 @@ public class Path extends AbstractShape {
      * or the altitudes in the specified positions. Adds extrusion points -- those on the ground -- when the path is
      * extruded and the specified single altitude is not 0.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param positions
-	 *            the positions to create a path for.
-	 * @param altitude
-	 *            if non-null, the height above the terrain to use for all positions. If null, each position's
+     * @param dc the current draw context.
+     * @param positions the positions to create a path for.
+     * @param altitude if non-null, the height above the terrain to use for all positions. If null, each position's
      * altitude is used as the height above the terrain.
      * @param path a buffer in which to store the computed points. May be null. The buffer is not used if it is null or
      * tool small for the required number of points. A new buffer is created in that case and returned by this method.
@@ -1902,10 +1851,8 @@ public class Path extends AbstractShape {
      * Registers this Path's pickable position color codes with the specified pickCandidates. The pickCandidates must be
      * an instance of PathPickSupport. This does nothing if this Path's position points are not drawn.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param pickCandidates
-	 *            the PickSupport to register with. Must be an instance of PathPickSupport.
+     * @param dc the current draw context.
+     * @param pickCandidates the PickSupport to register with. Must be an instance of PathPickSupport.
      */
     protected void addPickablePositions(DrawContext dc, PickSupport pickCandidates) {
         if (!this.isShowPositions()) {
@@ -1960,10 +1907,8 @@ public class Path extends AbstractShape {
      * PickedObject's AVList contains the picked position's geographic position in the key AVKey.POSITION and its
      * ordinal number in the key AVKey.ORDINAL.
      *
-	 * @param colorCode
-	 *            the color code corresponding to the picked position point.
-	 * @param positionIndex
-	 *            the position point's index.
+     * @param colorCode the color code corresponding to the picked position point.
+     * @param positionIndex the position point's index.
      *
      * @return a PickedObject corresponding to the position point at the specified index.
      */
@@ -1987,10 +1932,8 @@ public class Path extends AbstractShape {
      * Generates positions defining this path with path type and terrain-conforming properties applied. Builds the
      * path's <code>tessellatedPositions</code> and <code>polePositions</code> fields.
      *
-	 * @param pathData
-	 *            the current globe-specific path data.
-	 * @param dc
-	 *            the current draw context.
+     * @param pathData the current globe-specific path data.
+     * @param dc the current draw context.
      */
     protected void makeTessellatedPositions(DrawContext dc, PathData pathData) {
         if (this.numPositions < 2) {
@@ -2036,10 +1979,8 @@ public class Path extends AbstractShape {
      * Computes this Path's distance from the eye point, for use in determining when to show positions points. The value
      * returned is only an approximation because the eye distance varies along the path.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param pathData
-	 *            this path's current shape data.
+     * @param dc the current draw context.
+     * @param pathData this path's current shape data.
      *
      * @return the distance of the shape from the eye point. If the eye distance cannot be computed, the eye position's
      * elevation is returned instead.
@@ -2190,8 +2131,7 @@ public class Path extends AbstractShape {
      * Returns the Path position corresponding index. This returns null if the index does not correspond to an original
      * position.
      *
-	 * @param positionIndex
-	 *            the position's index.
+     * @param positionIndex the position's index.
      *
      * @return the Position corresponding to the specified index.
      */
@@ -2208,8 +2148,7 @@ public class Path extends AbstractShape {
      * Returns the ordinal number corresponding to the position. This returns null if the position index does not
      * correspond to an original position.
      *
-	 * @param positionIndex
-	 *            the position's index.
+     * @param positionIndex the position's index.
      *
      * @return the ordinal number corresponding to the specified position index.
      */
@@ -2223,10 +2162,8 @@ public class Path extends AbstractShape {
      * if this path's positionColors property is <code>null</code>. This returns white if a color cannot be determined
      * for the specified position and ordinal.
      *
-	 * @param pos
-	 *            the path position the color corresponds to.
-	 * @param ordinal
-	 *            the ordinal number of the specified position.
+     * @param pos the path position the color corresponds to.
+     * @param ordinal the ordinal number of the specified position.
      *
      * @return an RGBA color corresponding to the position and ordinal, or <code>null</code> if this path's
      * positionColors property is <code>null</code>.
@@ -2243,16 +2180,11 @@ public class Path extends AbstractShape {
     /**
      * Determines whether the segment between two path positions is visible.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param posA
-	 *            the segment's first position.
-	 * @param posB
-	 *            the segment's second position.
-	 * @param ptA
-	 *            the model-coordinate point corresponding to the segment's first position.
-	 * @param ptB
-	 *            the model-coordinate point corresponding to the segment's second position.
+     * @param dc the current draw context.
+     * @param posA the segment's first position.
+     * @param posB the segment's second position.
+     * @param ptA the model-coordinate point corresponding to the segment's first position.
+     * @param ptB the model-coordinate point corresponding to the segment's second position.
      *
      * @return true if the segment is visible relative to the current view frustum, otherwise false.
      */
@@ -2294,12 +2226,9 @@ public class Path extends AbstractShape {
      * has no associated color.
      * @param colorB the color corresponding to the segment's second position, or <code>null</code> if the first
      * position has no associated color.
-	 * @param ordinalA
-	 *            the ordinal number corresponding to the segment's first position in the original position list.
-	 * @param ordinalB
-	 *            the ordinal number corresponding to the segment's second position in the original position list.
-	 * @param pathData
-	 *            the current globe-specific path data.
+     * @param ordinalA the ordinal number corresponding to the segment's first position in the original position list.
+     * @param ordinalB the ordinal number corresponding to the segment's second position in the original position list.
+     * @param pathData the current globe-specific path data.
      */
     @SuppressWarnings({"StringEquality", "UnusedParameters"})
     protected void makeSegment(DrawContext dc, Position posA, Position posB, Vec4 ptA, Vec4 ptB, Color colorA,
@@ -2339,51 +2268,54 @@ public class Path extends AbstractShape {
 		else
 			step = arcLength / this.numSubsegments;
 
-        Position pos = null;
-        Color color = null;
+		Position pos = null;
+		Color color = null;
 		for (double s = 0, p = step; arcLength - p > 1e-9; p += step)
 		{
-            s = p / arcLength;
+			s = p / arcLength;
 			if (this.pathType == AVKey.LINEAR)
 			{
 				if (segmentAzimuth == null || segmentDistance == null)
 				{
-                    segmentAzimuth = LatLon.linearAzimuth(posA, posB);
-                    segmentDistance = LatLon.linearDistance(posA, posB);
-                }
-                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
-                LatLon latLon = LatLon.linearEndPosition(posA, segmentAzimuth, distance);
-                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
-                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
+					segmentAzimuth = LatLon.linearAzimuth(posA, posB);
+					segmentDistance = LatLon.linearDistance(posA, posB);
+				}
+				Angle distance = Angle.fromRadians(s * segmentDistance.radians);
+				LatLon latLon = LatLon.linearEndPosition(posA, segmentAzimuth, distance);
+				pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
+				color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
 			}
 			else if (this.pathType == AVKey.RHUMB_LINE || this.pathType == AVKey.LOXODROME)
 			{
 				if (segmentAzimuth == null || segmentDistance == null)
 				{
-                    segmentAzimuth = LatLon.rhumbAzimuth(posA, posB);
-                    segmentDistance = LatLon.rhumbDistance(posA, posB);
-                }
-                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
-                LatLon latLon = LatLon.rhumbEndPosition(posA, segmentAzimuth, distance);
-                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
-                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
+					segmentAzimuth = LatLon.rhumbAzimuth(posA, posB);
+					segmentDistance = LatLon.rhumbDistance(posA, posB);
+				}
+				Angle distance = Angle.fromRadians(s * segmentDistance.radians);
+				LatLon latLon = LatLon.rhumbEndPosition(posA, segmentAzimuth, distance);
+				pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
+				color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
 			}
 			else // GREAT_CIRCLE
 			{
 				if (segmentAzimuth == null || segmentDistance == null)
-	            {
-	                if (segmentAzimuth == null) {
-	                    segmentAzimuth = LatLon.greatCircleAzimuth(posA, posB);
-	                    segmentDistance = LatLon.greatCircleDistance(posA, posB);
-	                }
-	                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
-	                LatLon latLon = LatLon.greatCircleEndPosition(posA, segmentAzimuth, distance);
-	                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
-	                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
-	            }
+				{
+					if (segmentAzimuth == null)
+					{
+						segmentAzimuth = LatLon.greatCircleAzimuth(posA, posB);
+						segmentDistance = LatLon.greatCircleDistance(posA, posB);
+					}
+					else if (segmentDistance == null)
+						segmentDistance = LatLon.greatCircleDistance(posA, posB);
+					Angle distance = Angle.fromRadians(s * segmentDistance.radians);
+					LatLon latLon = LatLon.greatCircleEndPosition(posA, segmentAzimuth, distance);
+					pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
+					color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
+				}
 
-	            this.addTessellatedPosition(pos, color, null, pathData);
-	        }
+				this.addTessellatedPosition(pos, color, null, pathData);
+			}
 		}
 
         this.addTessellatedPosition(posB, colorB, ordinalB, pathData);
@@ -2393,12 +2325,9 @@ public class Path extends AbstractShape {
      * Computes the approximate model-coordinate, path length between two positions. The length of the path depends on
      * the path type: great circle, rhumb, or linear.
      *
-	 * @param dc
-	 *            the current draw context.
-	 * @param posA
-	 *            the first position.
-	 * @param posB
-	 *            the second position.
+     * @param dc the current draw context.
+     * @param posA the first position.
+     * @param posB the second position.
      *
      * @return the distance between the positions.
      */
@@ -2429,8 +2358,7 @@ public class Path extends AbstractShape {
     /**
      * Computes this path's reference center.
      *
-	 * @param dc
-	 *            the current draw context.
+     * @param dc the current draw context.
      *
      * @return the computed reference center, or null if it cannot be computed.
      */
@@ -2453,10 +2381,8 @@ public class Path extends AbstractShape {
      * <p>
      * A {@link gov.nasa.worldwind.render.AbstractShape.AbstractShapeData} must be current when this method is called.
      *
-	 * @param dc
-	 *            the draw context.
-	 * @param pathData
-	 *            the current shape data for this shape.
+     * @param dc the draw context.
+     * @param pathData the current shape data for this shape.
      *
      * @return the minimum distance from the shape to the eye point.
      */
@@ -2489,8 +2415,7 @@ public class Path extends AbstractShape {
     /**
      * Computes the path's bounding box from the current rendering path. Assumes the rendering path is up-to-date.
      *
-	 * @param current
-	 *            the current data for this shape.
+     * @param current the current data for this shape.
      *
      * @return the computed extent.
      */
@@ -2524,10 +2449,10 @@ public class Path extends AbstractShape {
 
         // Use the tessellated positions if they exist because they best represent the actual shape.
         Iterable<? extends Position> posits = current.tessellatedPositions != null
-			? current.tessellatedPositions
-			: this.getPositions();
-		if (posits == null)
+                ? current.tessellatedPositions : this.getPositions();
+        if (posits == null) {
             return null;
+        }
 
         return super.computeExtentFromPositions(globe, verticalExaggeration, posits);
     }
