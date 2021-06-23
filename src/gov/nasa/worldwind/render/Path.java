@@ -2256,67 +2256,60 @@ public class Path extends AbstractShape {
         Angle segmentAzimuth = null;
         Angle segmentDistance = null;
 
-		double step;
+        double step;
 
-		if (this.isFollowTerrain() || dc.is2DGlobe())
-		{
-			step = this.terrainConformance * (dc.getView().computePixelSizeAtDistance(ptA.distanceTo3(dc.getView().getEyePoint()))
-				+ dc.getView().computePixelSizeAtDistance(ptB.distanceTo3(dc.getView().getEyePoint()))) / 2;
-			if (arcLength / step > 10 * this.numSubsegments)
-				step = arcLength / (10d * this.numSubsegments);
-		}
-		else
-			step = arcLength / this.numSubsegments;
+        for (double s = 0, p = 0; s < 1;) {
+            if (this.isFollowTerrain() || dc.is2DGlobe()) {
+                step = this.terrainConformance * dc.getView().computePixelSizeAtDistance(
+                        ptA.distanceTo3(dc.getView().getEyePoint()));
+                if (arcLength / step > 10 * this.numSubsegments)
+    				step = arcLength / (10d * this.numSubsegments);
+                p += step;
+            } else {
+                p += arcLength / this.numSubsegments;
+            }
 
-		Position pos = null;
-		Color color = null;
-		for (double s = 0, p = step; arcLength - p > 1e-9; p += step)
-		{
-			s = p / arcLength;
-			if (this.pathType == AVKey.LINEAR)
-			{
-				if (segmentAzimuth == null || segmentDistance == null)
-				{
-					segmentAzimuth = LatLon.linearAzimuth(posA, posB);
-					segmentDistance = LatLon.linearDistance(posA, posB);
-				}
-				Angle distance = Angle.fromRadians(s * segmentDistance.radians);
-				LatLon latLon = LatLon.linearEndPosition(posA, segmentAzimuth, distance);
-				pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
-				color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
-			}
-			else if (this.pathType == AVKey.RHUMB_LINE || this.pathType == AVKey.LOXODROME)
-			{
-				if (segmentAzimuth == null || segmentDistance == null)
-				{
-					segmentAzimuth = LatLon.rhumbAzimuth(posA, posB);
-					segmentDistance = LatLon.rhumbDistance(posA, posB);
-				}
-				Angle distance = Angle.fromRadians(s * segmentDistance.radians);
-				LatLon latLon = LatLon.rhumbEndPosition(posA, segmentAzimuth, distance);
-				pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
-				color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
-			}
-			else // GREAT_CIRCLE
-			{
-				if (segmentAzimuth == null || segmentDistance == null)
-				{
-					if (segmentAzimuth == null)
-					{
-						segmentAzimuth = LatLon.greatCircleAzimuth(posA, posB);
-						segmentDistance = LatLon.greatCircleDistance(posA, posB);
-					}
-					else if (segmentDistance == null)
-						segmentDistance = LatLon.greatCircleDistance(posA, posB);
-					Angle distance = Angle.fromRadians(s * segmentDistance.radians);
-					LatLon latLon = LatLon.greatCircleEndPosition(posA, segmentAzimuth, distance);
-					pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
-					color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
-				}
+            if (arcLength < p || arcLength - p < 1e-9) {
+                break; // position is either beyond the arc length or the remaining distance is in millimeters on Earth
+            }
+            Position pos;
+            Color color;
+            s = p / arcLength;
 
-				this.addTessellatedPosition(pos, color, null, pathData);
-			}
-		}
+            if (this.pathType == AVKey.LINEAR) {
+                if (segmentAzimuth == null || segmentDistance == null) {
+                    segmentAzimuth = LatLon.linearAzimuth(posA, posB);
+                    segmentDistance = LatLon.linearDistance(posA, posB);
+                }
+                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
+                LatLon latLon = LatLon.linearEndPosition(posA, segmentAzimuth, distance);
+                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
+                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
+            } else if (this.pathType == AVKey.RHUMB_LINE || this.pathType == AVKey.LOXODROME) {
+                if (segmentAzimuth == null || segmentDistance == null) {
+                    segmentAzimuth = LatLon.rhumbAzimuth(posA, posB);
+                    segmentDistance = LatLon.rhumbDistance(posA, posB);
+                }
+                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
+                LatLon latLon = LatLon.rhumbEndPosition(posA, segmentAzimuth, distance);
+                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
+                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
+            } else // GREAT_CIRCLE
+            {
+                if (segmentAzimuth == null || segmentDistance == null) {
+                    segmentAzimuth = LatLon.greatCircleAzimuth(posA, posB);
+                    segmentDistance = LatLon.greatCircleDistance(posA, posB);
+                }
+                Angle distance = Angle.fromRadians(s * segmentDistance.radians);
+                LatLon latLon = LatLon.greatCircleEndPosition(posA, segmentAzimuth, distance);
+                pos = new Position(latLon, (1 - s) * posA.getElevation() + s * posB.getElevation());
+                color = (colorA != null && colorB != null) ? WWUtil.interpolateColor(s, colorA, colorB) : null;
+            }
+
+            this.addTessellatedPosition(pos, color, null, pathData);
+
+            ptA = ptB;
+        }
 
         this.addTessellatedPosition(posB, colorB, ordinalB, pathData);
     }
